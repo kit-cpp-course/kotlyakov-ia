@@ -154,7 +154,7 @@ void triangulated_poly::draw_polygone(string output) {
 		imwrite(output, img);
 	}
 	catch (...) {
-		cout << "Íåäîïóñòèìîå èìÿ èçîáðàæåíèÿ" << endl;
+		cout << "ÐÐµÐ´Ð¾Ð¿ÑƒÑÑ‚Ð¸Ð¼Ð¾Ðµ Ð¸Ð¼Ñ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ" << endl;
 		return;
 	}		
 }
