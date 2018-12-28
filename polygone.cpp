@@ -30,7 +30,7 @@ polygone::polygone(const polygone &source) {
 }
 
 polygone& polygone::operator =(const polygone &source) {
-	if (this == &source) return *this;  //  проверка на самоприсваивание	
+	if (this == &source) return *this; 	//  РїСЂРѕРІРµСЂРєР° РЅР° СЃР°РјРѕРїСЂРёСЃРІР°РёРІР°РЅРёРµ	
 	
 	delete[] UPPER, LOWER;
 	UPPER_count = source.UPPER_count;
