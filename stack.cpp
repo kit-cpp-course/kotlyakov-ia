@@ -30,7 +30,7 @@ Stack::Stack(const Stack &source)
 
 Stack& Stack::operator =(const Stack &source) 
 {
-	if (this == &source) return *this;  //  проверка на самоприсваивание	
+	if (this == &source) return *this;  //РїСЂРѕРІРµСЂРєР° РЅР° СЃР°РјРѕРїСЂРёСЃРІР°РёРІР°РЅРёРµ	
 
 	delete[] p;
 	length = source.length;
