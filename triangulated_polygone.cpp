@@ -7,8 +7,7 @@
 using namespace cv;
 
 triangulated_poly::triangulated_poly(point* U_points, point* L_points, int UPPER_count, int LOWER_count) :polygone(U_points, L_points, UPPER_count, LOWER_count) {
-	stack_length = UPPER_count + LOWER_count - 2;
-	stack=Stack(stack_length);
+	stack_length = UPPER_count + LOWER_count - 2;	
 	left_vertex = UPPER[0];
 	right_vertex = UPPER[UPPER_count-1];
 	diagonals =new diagonal[stack_length*2];	
@@ -21,6 +20,29 @@ triangulated_poly::~triangulated_poly() {
 		delete[] x_vertexes;
 }
 
+triangulated_poly::triangulated_poly(const triangulated_poly &source) {
+	diagonals = new diagonal[source.stack_length*2];
+	x_vertexes = new flag_vertex[source.stack_length];
+}
+
+triangulated_poly& triangulated_poly::operator =(const triangulated_poly &source) {
+	if (this == &source) return *this;  //  проверка на самоприсваивание	
+
+	delete[] diagonals, x_vertexes ;
+	stack_length = source.stack_length;
+	diagonals= new diagonal[stack_length * 2];
+	x_vertexes = new flag_vertex[stack_length];	
+	for (int i = 0; i < stack_length * 2; i++)
+	{
+		diagonals[i] = source.diagonals[i];
+	}
+	for (int i = 0; i < stack_length; i++)
+	{
+		x_vertexes[i] = source.x_vertexes[i];
+	}
+	return *this;
+}
+
 void triangulated_poly::x_sort() {
 	x_vertexes[0] = flag_vertex(left_vertex, true);
 	x_vertexes[stack_length-1] = flag_vertex(right_vertex, true);
@@ -28,7 +50,7 @@ void triangulated_poly::x_sort() {
 	int i = 1;
 	int j = 1;
 	while (k < stack_length - 1) {
-		if (UPPER[i].x <= LOWER[j].x) {
+		if (UPPER[i].x < LOWER[j].x) {
 			x_vertexes[k] = flag_vertex(UPPER[i], true);
 			k++;
 			i++;
@@ -46,6 +68,7 @@ void triangulated_poly::x_sort() {
 }
 
 void triangulated_poly::triangulate() {
+	Stack stack=Stack(stack_length);
 	stack.push(x_vertexes[0]);
 	stack.push(x_vertexes[1]);
 	int di_count = 0;
@@ -106,6 +129,7 @@ void triangulated_poly::triangulate() {
 		}
 	}
 	diagonals[di_count] = diagonal(point(NAN, NAN), point(NAN, NAN));
+	
 }
 
 void triangulated_poly::show_diagonals() {
@@ -154,7 +178,7 @@ void triangulated_poly::draw_polygone(string output) {
 		imwrite(output, img);
 	}
 	catch (...) {
-		cout << "РќРµРґРѕРїСѓСЃС‚РёРјРѕРµ РёРјСЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ" << endl;
+		cout << "Недопустимое имя изображения" << endl;
 		return;
 	}		
 }

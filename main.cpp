@@ -1,5 +1,5 @@
 #include "iostream"
-#include "opencv2/opencv.hpp"		//Р±РёР»РёРѕС‚РµРєР° С„СѓРЅРєС†РёР№, РЅРµРѕР±С…РѕРґРёРјР°СЏ РґР»СЏ РІС‹РІРѕРґР° РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ СЂРµР·СѓР»СЊС‚Р°С‚Р° СЂР°Р±РѕС‚С‹ РїСЂРѕРіСЂР°РјРјС‹
+#include "opencv2/opencv.hpp"		//билиотека функций, необходимая для вывода графического результата работы программы
 #include "config.h"
 #include "argumets.h"
 #include "polygone.h"
@@ -12,15 +12,15 @@
 using namespace std;
 using namespace cv;
 
-int main(size_t count, char * args[]) {		//РёР»Рё char ** args (РјР°СЃСЃРёРІ СЃС‚СЂРѕРє) count(РєРѕР»РёС‡РµСЃС‚РІРѕ Р°СЂРіСѓРјРµРЅС‚РѕРІ)
+int main(size_t count, char * args[]) {		//или char ** args (массив строк) count(количество аргументов)
 	setlocale(LC_ALL, "Russian");
 	config & cfg = config::instance();	
 	cmd::arguments arg(count, args);
 	arg.apply(cfg);	
 	
 	ifstream f(cfg.input());
-	if (!f.good()) {									//РїСЂРѕРІРµСЂРєР° Р°СЂРіСѓРјРµРЅС‚РѕРІ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё РЅР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ
-		cout << "РќРµРєРѕСЂСЂРµРєС‚РЅРѕРµ РёРјСЏ С„Р°Р№Р»Р° " << endl;
+	if (!f.good()) {									//проверка аргументов командной строки на корректность
+		cout << "Некорректное имя файла " << endl;
 		return 1;
 	}
 	int n;
@@ -34,7 +34,7 @@ int main(size_t count, char * args[]) {		//РёР»Рё char ** args (РјР°СЃСЃРёРІ СЃС
 			upoints = new point[n];
 		}
 		catch (std::bad_array_new_length e) {
-			cout << "РћС€РёР±РєР° РІ С„РѕСЂРјР°С‚Рµ С‚РµРєСЃС‚РѕРІРѕРіРѕ С„Р°Р№Р»Р°" << endl;	//РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ С„Р°Р№Р»Р°, СЃ РѕРїРёСЃР°РЅРёРµРј РјРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРєР°
+			cout << "Ошибка в формате текстового файла" << endl;	//проверка на корректность содержимого файла, с описанием многоугольника
 			system("pause");
 			return 1;
 		}
@@ -48,7 +48,7 @@ int main(size_t count, char * args[]) {		//РёР»Рё char ** args (РјР°СЃСЃРёРІ СЃС
 			lpoints = new point[n];
 		}
 		catch (std::bad_array_new_length e) {
-			cout << "РћС€РёР±РєР° РІ С„РѕСЂРјР°С‚Рµ С‚РµРєСЃС‚РѕРІРѕРіРѕ С„Р°Р№Р»Р°" << endl;	//РїСЂРѕРІРµСЂРєР° РЅР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ С„Р°Р№Р»Р°, СЃ РѕРїРёСЃР°РЅРёРµРј РјРЅРѕРіРѕСѓРіРѕР»СЊРЅРёРєР°
+			cout << "Ошибка в формате текстового файла" << endl;	//проверка на корректность содержимого файла, с описанием многоугольника
 			system("pause");
 			return 1;
 		}		
@@ -60,7 +60,7 @@ int main(size_t count, char * args[]) {		//РёР»Рё char ** args (РјР°СЃСЃРёРІ СЃС
 	
 	
 	
-	triangulated_poly poly(upoints,lpoints, ulength,llength);		//СЃРѕР·РґР°РЅРёРµ С‚СЂРёР°РЅРіСѓР»РёСЂСѓРµРјРѕРіРѕ РѕР±СЉРµРєС‚Р° РїРѕ Р·Р°РґР°РЅРЅС‹Рј РїР°СЂР°РјРµС‚СЂР°Рј
+	triangulated_poly poly(upoints,lpoints, ulength,llength);		//создание триангулируемого объекта по заданным параметрам
 
 	//poly.show();
 	poly.triangulate();

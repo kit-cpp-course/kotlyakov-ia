@@ -6,7 +6,7 @@
 namespace cmd {
 
 	/*
-	РћР±СЂР°Р±РѕС‚РєР° Р°РіСЂСѓРјРµРЅС‚РѕРІ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё Рё РѕРїСЂРµРґРµР»РµРЅРёРµ РЅР° РёС… РѕСЃРЅРѕРІРµ РєРѕС„С„РёРіСѓСЂР°С†РёРё РїСЂРѕРіСЂР°РјРјС‹
+	Обработка агрументов командной строки и определение на их основе коффигурации программы
 	*/
 	class arguments {
 		size_t count;
@@ -16,21 +16,12 @@ namespace cmd {
 			return argument[index][0] == '/';
 		}
 
-		std::string find(const std::string name,std::string default ) const {			
-			for (size_t i = 1; i < count; i++) {
-				if (isKey(i) && !isKey(i + 1) && name==argument[i])
-					return argument[i + 1];
-			}
-			return default;
-		}
+		std::string find(const std::string name, std::string default) const;
 				
 
 	public:
 		arguments(size_t count,  char * arguments[]):count(count), argument(arguments){}
-		void apply(config & cfg) const {
-			cfg.m_input = find("/file", cfg.m_input);
-			cfg.m_output = find("/save", cfg.m_output);
-		}
+		void apply(config & cfg) const;
 	};
 
 }

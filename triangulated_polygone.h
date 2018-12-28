@@ -10,7 +10,7 @@ triangulated_poly - класс, описывающий триангулируемый монотонный многоугольник
 */
 
 class triangulated_poly :public polygone {
-	Stack stack;
+	
 	int stack_length;
 	/*
 	point left_vertex - левая вершина многоугольника
@@ -23,6 +23,8 @@ class triangulated_poly :public polygone {
 public:
 	triangulated_poly(point* U_points, point* L_points, int UPPER_count, int LOWER_count);
 	~triangulated_poly();
+	triangulated_poly(const triangulated_poly &source);
+	triangulated_poly& operator =(const triangulated_poly &source);
 
 
 	void x_sort();	//сортировка вершин многоугольника по х-координате
