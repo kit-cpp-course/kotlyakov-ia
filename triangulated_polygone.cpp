@@ -26,7 +26,7 @@ triangulated_poly::triangulated_poly(const triangulated_poly &source) {
 }
 
 triangulated_poly& triangulated_poly::operator =(const triangulated_poly &source) {
-	if (this == &source) return *this;  //  проверка на самоприсваивание	
+	if (this == &source) return *this;  //  РїСЂРѕРІРµСЂРєР° РЅР° СЃР°РјРѕРїСЂРёСЃРІР°РёРІР°РЅРёРµ	
 
 	delete[] diagonals, x_vertexes ;
 	stack_length = source.stack_length;
@@ -178,7 +178,7 @@ void triangulated_poly::draw_polygone(string output) {
 		imwrite(output, img);
 	}
 	catch (...) {
-		cout << "Недопустимое имя изображения" << endl;
+		cout << "РќРµРґРѕРїСѓСЃС‚РёРјРѕРµ РёРјСЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ" << endl;
 		return;
 	}		
 }
